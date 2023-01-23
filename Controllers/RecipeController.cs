@@ -54,7 +54,8 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/Recipe
-       
+       [HttpPost]
+       [Route("api/createrecipe")]
         public IHttpActionResult Post([FromBody] RecipeModel value)
         {
             #region
@@ -87,11 +88,12 @@ namespace WebApplication1.Controllers
                 x.Image = i.Image;
                 x.Time = i.Time;
                 x.CookingMethod = i.CookingMethod;
+                
                 List<Ingredient> ing = new List<Ingredient>();
-                //foreach (IngredientsModels item in i.inglist)
-                //{
-                //    ing.Add(db.Ingredient.FirstOrDefault(y => y.Id == item.Id));
-                //}
+                foreach (IngredientsModels item in i.inglist)
+                {
+                    ing.Add(db.Ingredient.FirstOrDefault(y => y.Id == item.Id));
+                }
                 x.Ingredient = ing;
                 db.Recipes.Add(x);
                 db.SaveChanges();
